@@ -4,6 +4,7 @@ This project is a web crawler that extracts information from Wikipedia pages bas
 
 ## How to clone and use this project:
 
-1.  Clone the repository: `git clone <repository_url>`
-2.  Install the dependencies: `pip install -r requirements.txt`
-3.  Run the main script: `python main.py`
+~bash/powershell
+  1.  Clone the repository: `git clone <repository_url>`
+  2.  Install the dependencies: `pip install -r requirements.txt`
+  3.  Run the main script: `python main.py`
