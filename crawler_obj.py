@@ -2,6 +2,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from scrapping_methods import ScrapperFunctions
+import logging
+
 
 class Crawler: 
     
@@ -26,6 +28,7 @@ class Crawler:
         """
        
         start_time = time.time()  
+        logging.info("Crawler started")
         duration_limit = self.duration_limit
         
         time_frame = [start_time,duration_limit]
@@ -34,7 +37,7 @@ class Crawler:
             try:
                 
                 if (time.time() - start_time) >= duration_limit:
-                    print(f"Time limit of {duration_limit} seconds reached. Stopping crawl.")
+                    logging.warning(f"Time limit of {duration_limit} seconds reached. Stopping crawl.")
                     break
 
                 to_crawl = self.crawl_queue.popleft()
@@ -55,7 +58,8 @@ class Crawler:
                     crawler = ScrapperFunctions(soup)
                     
                     crawler.main_heading()
-                    #crawler.find_all_links(self.crawl_queue,crawled)
+                    crawler.find_all_links(self.crawl_queue,self.crawled)
+                    
 
                 
                 else:
@@ -63,9 +67,9 @@ class Crawler:
                     break 
             
             except requests.exceptions.RequestException as e: 
-                print(f"A request error occurred for {to_crawl}: {e}")
+                logging.error(f"A request error occurred for {to_crawl}: {e}")
             except Exception as e:
-                print(f"An unexpected error occurred: {e}")
+                logging.error(f"An unexpected error occurred: {e}")
         
         self.duration_limit = duration_limit
         
@@ -90,15 +94,16 @@ class Crawler:
         """
         start_time, duration_limit = time_frame
         
-        while True:
-            if not self.crawl_queue and (time.time() - start_time) < duration_limit :
-                print("Crawling finished: Queue is empty.")
-                break
-                
-            elif (time.time() - start_time) >= duration_limit:
-                print(f"Crawling stopped due to time limit ({duration_limit} seconds).")
+        
+        if not self.crawl_queue and (time.time() - start_time) < duration_limit :
+            logging.info("Crawling finished: Queue is empty.")
+            
+            
+        elif (time.time() - start_time) >= duration_limit:
+            logging.info(f"Crawling stopped due to time limit ({duration_limit} seconds).")
 
-                print(f"Total pages crawled: {len(self.crawled)}")
+            logging.info(f"Total pages crawled: {len(self.crawled)}")
+            
         
 
 def main():

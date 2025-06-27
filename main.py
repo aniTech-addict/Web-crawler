@@ -1,6 +1,8 @@
 from collections import deque
+import logging
 from crawler_obj import Crawler
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def main():
@@ -12,7 +14,7 @@ def main():
     base_url = "https://en.wikipedia.org/"
     page_url = f"{base_url}/wiki/{wiki_search}"
 
-    print(f"Crawling page: {page_url}")
+    logging.info(f"Crawling page: {page_url}")
     
     
     crawl_queue = deque ([page_url])
