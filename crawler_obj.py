@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from scrapping_methods import ScrapperFunctions
 
-class Crawler:
+class Crawler: 
     
     def __init__(self, crawl_queue,crawled,limit = 50):
         self.crawl_queue = crawl_queue
@@ -12,6 +12,19 @@ class Crawler:
         
     def crawller_main_body(self):
     
+        """
+        The main loop of the crawler. It will continue to crawl pages
+        from the queue until the specified duration limit is reached.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+        """
+       
         start_time = time.time()  
         duration_limit = self.duration_limit
         
@@ -63,6 +76,18 @@ class Crawler:
      # ATTENTION !! Do not call this fn explicitly (already called in crawler_main_body)
     def crawl_end_summary(self,time_frame):
         
+        """
+        
+    Provides a summary of the crawling process, indicating whether the crawl finished
+    due to an empty queue or a time limit. 
+    Continuously checks the crawl queue and the elapsed time since the start of the crawl. 
+    Prints a message when the crawl is finished
+    or stopped due to time limit, and displays the total number of pages crawled.
+
+    Args:
+        time_frame (tuple): A tuple containing the start time of the crawl and the duration limit in seconds.
+    
+        """
         start_time, duration_limit = time_frame
         
         while True:
